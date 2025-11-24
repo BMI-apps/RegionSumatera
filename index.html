@@ -5,6 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Web Region Sumatera</title>
     <style>
+    body {
+        margin: 0; /* Penting untuk menghilangkan margin default browser */
+        padding: 0;
+        font-family: sans-serif;
+    }
+    
+    /* Styling untuk Footer */
+    #app-footer {
+        /* Properti Kunci untuk Footer Otomatis di Bawah */
+        position: fixed; 
+        bottom: 0; 
+        left: 0;
+        width: 100%;
+        
+        /* Styling Visual */
+        background-color: #333; /* Warna gelap untuk latar belakang */
+        color: white; /* Warna teks */
+        padding: 10px 20px;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Bayangan di atas footer */
+        z-index: 1000; /* Memastikan footer berada di atas konten lain */
+        height: 50px; /* Tentukan tinggi footer */
+        box-sizing: border-box; /* Memastikan padding dan border dihitung dalam height */
+    }
+    
+    .footer-content {
+        display: flex;
+        justify-content: space-between; /* Menyebar konten */
+        align-items: center;
+        max-width: 1200px; /* Batasi lebar konten */
+        margin: 0 auto; /* Tengahkankan konten */
+        height: 100%;
+    }
+    
+    .footer-content a {
+        color: #ccc;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+    
+    .footer-content a:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+    
+    /* PENYESUAIAN PENTING UNTUK KONTEN UTAMA */
+    /* Berikan padding-bottom pada body/main setidaknya setinggi footer
+       agar konten tidak tertutup oleh footer saat digulir ke bawah. */
+    main {
+        padding-bottom: 70px; /* Pastikan ini lebih besar dari tinggi footer (50px) */
+        text-align: center;
+    }      
+    </style>
+    <style>
         /* Gaya Dasar & Responsif */
         body {
             font-family: Arial, sans-serif;
@@ -107,6 +160,15 @@
     -->        <p style="font-size: 14px; margin: 5px 0;">&copy;2025 - RBPM Region Sumatera.</p>
         </div>
     </footer>
-
+<footer id="app-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Nama Aplikasi. Semua Hak Cipta Dilindungi.</p>
+            <nav>
+                <a href="#">Privasi</a> |
+                <a href="#">Ketentuan</a> |
+                <a href="#">Bantuan</a>
+            </nav>
+        </div>
+    </footer>
 </body>
 </html>
