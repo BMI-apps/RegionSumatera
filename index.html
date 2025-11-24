@@ -32,7 +32,7 @@
     .footer-content {
         display: flex;
         justify-content: space-between; /* Menyebar konten */
-        align-items: center;
+/*        align-items: center;*/
         max-width: 1200px; /* Batasi lebar konten */
         margin: 0 auto; /* Tengahkankan konten */
         height: 100%;
@@ -54,7 +54,7 @@
        agar konten tidak tertutup oleh footer saat digulir ke bawah. */
     main {
         padding-bottom: 70px; /* Pastikan ini lebih besar dari tinggi footer (50px) */
-        text-align: center;
+/*        text-align: center; */
     }      
     </style>
     <style>
@@ -75,53 +75,8 @@
             padding: 40px 20px;
         }
         h1, h2 {
-            text-align: center;
+/*            text-align: center;*/
             color: #2c3e50;
-        }
-
-        /* Gaya CTA */
-        .cta-group {
-            text-align: center;
-            margin-top: 30px;
-            margin-bottom: 40px;
-        }
-        .cta-button {
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-        }
-        .cta-primary {
-            background-color: #170127; /* Biru Cerah - M-Direct */
-            color: white;
-        }
-        .cta-secondary {
-            background-color: #170127; /* Hijau - M-Activity */
-            color: white;
-        }
-        .cta-primary:hover, .cta-secondary:hover {
-            opacity: 0.9;
-        }
-
-        /* Gaya Fitur */
-        .feature-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            text-align: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .feature-item {
-            flex-basis: calc(50% - 40px); /* 2 kolom di desktop */
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 10px;
         }
         @media (max-width: 768px) {
             .feature-item {
@@ -139,9 +94,9 @@
             <a href="https://ahmad-denny.github.io/m-direct/" class="cta-button cta-primary"><img src=".\img\logo_mdirect.png" width="80"></a>
             <a href="https://ahmad-denny.github.io/m-activity/" class="cta-button cta-secondary"><img src=".\img\logo_mactivity.png" width="80"></a>
         </div>
-        <footer id="app-footer" align="center">
+        <footer id="app-footer">
             <div class="footer-content">
-                <p style="font-size: 14px; margin: 5px 0; text-align: center;">&copy;2025 - RBPM Region Sumatera.</p>
+                <p style="font-size: 14px; margin: 5px 0;">&copy;2025 - RBPM Region Sumatera.</p>
             </div>
         </footer>
     </div>
