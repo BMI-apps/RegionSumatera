@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Matematika Interaktif</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .screen {
+            display: none;
+            padding: 30px;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .btn {
+            background: linear-gradient(90deg, #00b09b, #96c93d);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-red {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+        }
+        
+        .btn-blue {
+            background: linear-gradient(90deg, #2193b0, #6dd5ed);
+        }
+        
+        .btn-purple {
+            background: linear-gradient(90deg, #8e2de2, #4a00e0);
+        }
+        
+        .player-selection {
+            text-align: center;
+        }
+        
+        .player-options {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .level-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .level-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .level-card.easy {
+            background: linear-gradient(135deg, #00b894, #55efc4);
+        }
+        
+        .level-card.medium {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+        }
+        
+        .level-card.hard {
+            background: linear-gradient(135deg, #e17055, #d63031);
+        }
+        
+        .game-area {
+            text-align: center;
+        }
+        
+        .question {
+            font-size: 2.5rem;
+            margin: 30px 0;
+            color: #2d3436;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .option-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .option-btn.correct {
+            background: linear-gradient(135deg, #00b894, #55efc4);
+        }
+        
+        .option-btn.incorrect {
+            background: linear-gradient(135deg, #e17055, #d63031);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #0984e3;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .ranking-table th, .ranking-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .ranking-table th {
+            background-color: #74b9ff;
+            color: white;
+        }
+        
+        .ranking-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .ranking-table tr:hover {
+            background-color: #e8f4f8;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00b09b, #96c93d);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .feedback {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 30px;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .correct-feedback {
+            background: linear-gradient(135deg, #00b894, #55efc4);
+            color: white;
+        }
+        
+        .incorrect-feedback {
+            background: linear-gradient(135deg, #e17055, #d63031);
+            color: white;
+        }
+        
+        .center {
+            text-align: center;
+        }
+        
+        .player-indicator {
+            background: linear-gradient(90deg, #8e2de2, #4a00e0);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 600px) {
+            .player-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .level-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Game Matematika Interaktif</h1>
+            <p>Klik jawaban yang benar secepat mungkin!</p>
+        </header>
+        
+        <!-- Screen 1: Player Selection -->
+        <div id="player-screen" class="screen active">
+            <div class="player-selection">
+                <h2>Pilih Jumlah Pemain</h2>
+                <div class="player-options">
+                    <button class="btn btn-blue" onclick="selectPlayers(1)">1 Pemain</button>
+                    <button class="btn btn-red" onclick="selectPlayers(2)">2 Pemain</button>
+                </div>
+                <button class="btn" onclick="showScreen('ranking-screen')">Lihat Peringkat</button>
+            </div>
+        </div>
+        
+        <!-- Screen 2: Level Selection -->
+        <div id="level-screen" class="screen">
+            <h2 class="center">Pilih Level</h2>
+            <div class="level-grid">
+                <div class="level-card easy" onclick="startGame('easy')">
+                    <h3>Mudah</h3>
+                    <p>10 Level</p>
+                    <p>Operasi Dasar</p>
+                </div>
+                <div class="level-card medium" onclick="startGame('medium')">
+                    <h3>Sedang</h3>
+                    <p>5 Level</p>
+                    <p>Operasi Menengah</p>
+                </div>
+                <div class="level-card hard" onclick="startGame('hard')">
+                    <h3>Susah</h3>
+                    <p>3 Level</p>
+                    <p>Operasi Kompleks</p>
+                </div>
+            </div>
+            <div class="center">
+                <button class="btn" onclick="showScreen('player-screen')">Kembali</button>
+            </div>
+        </div>
+        
+        <!-- Screen 3: Game Area -->
+        <div id="game-screen" class="screen">
+            <div class="game-area">
+                <h2 id="level-title">Level 1</h2>
+                
+                <div id="player-turn" class="player-indicator"></div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div>Skor</div>
+                        <div id="score" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>Level</div>
+                        <div id="current-level" class="stat-value">1/10</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>Waktu</div>
+                        <div id="timer" class="stat-value">60</div>
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div id="progress" class="progress" style="width: 0%"></div>
+                </div>
+                
+                <div id="question" class="question">5 + 3 = ?</div>
+                
+                <div id="options-container" class="options-grid">
+                    <!-- Options will be generated here -->
+                </div>
+                
+                <div id="feedback" class="feedback"></div>
+                
+                <button class="btn btn-red" onclick="endGame()">Akhiri Game</button>
+            </div>
+        </div>
+        
+        <!-- Screen 4: Ranking -->
+        <div id="ranking-screen" class="screen">
+            <h2 class="center">🏆 Peringkat Pemain</h2>
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>Peringkat</th>
+                        <th>Nama Pemain</th>
+                        <th>Skor Tertinggi</th>
+                        <th>Level Tertinggi</th>
+                    </tr>
+                </thead>
+                <tbody id="ranking-body">
+                    <!-- Ranking data will be inserted here -->
+                </tbody>
+            </table>
+            <div class="center">
+                <button class="btn" onclick="showScreen('player-screen')">Kembali ke Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let gameState = {
+            players: 1,
+            currentPlayer: 1,
+            currentScreen: 'player-screen',
+            currentLevel: 1,
+            maxLevel: 10,
+            scores: [0, 0], // Player 1 and Player 2 scores
+            timeLeft: 60,
+            timer: null,
+            currentQuestion: {},
+            difficulty: 'easy',
+            rankings: [
+                { name: "Andi", score: 1500, level: "Susah" },
+                { name: "Budi", score: 1200, level: "Sedang" },
+                { name: "Citra", score: 1000, level: "Mudah" },
+                { name: "Dewi", score: 800, level: "Mudah" },
+                { name: "Eko", score: 600, level: "Mudah" }
+            ]
+        };
+
+        // DOM Elements
+        const screens = {
+            player: document.getElementById('player-screen'),
+            level: document.getElementById('level-screen'),
+            game: document.getElementById('game-screen'),
+            ranking: document.getElementById('ranking-screen')
+        };
+
+        // Show screen
+        function showScreen(screenId) {
+            // Hide all screens
+            Object.values(screens).forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+            gameState.currentScreen = screenId;
+        }
+
+        // Select number of players
+        function selectPlayers(num) {
+            gameState.players = num;
+            gameState.currentPlayer = 1;
+            gameState.scores = [0, 0];
+            showScreen('level-screen');
+        }
+
+        // Start game with selected difficulty
+        function startGame(difficulty) {
+            gameState.difficulty = difficulty;
+            
+            // Set max level based on difficulty
+            switch(difficulty) {
+                case 'easy':
+                    gameState.maxLevel = 10;
+                    break;
+                case 'medium':
+                    gameState.maxLevel = 5;
+                    break;
+                case 'hard':
+                    gameState.maxLevel = 3;
+                    break;
+            }
+            
+            gameState.currentLevel = 1;
+            gameState.scores = [0, 0];
+            gameState.timeLeft = 60;
+            
+            showScreen('game-screen');
+            updateLevelDisplay();
+            updatePlayerTurn();
+            generateQuestion();
+            startTimer();
+        }
+
+        // Update level display
+        function updateLevelDisplay() {
+            document.getElementById('level-title').textContent = 
+                `Level ${gameState.currentLevel} (${gameState.difficulty})`;
+            document.getElementById('current-level').textContent = 
+                `${gameState.currentLevel}/${gameState.maxLevel}`;
+            document.getElementById('score').textContent = 
+                gameState.players === 1 ? gameState.scores[0] : 
+                `P1: ${gameState.scores[0]} | P2: ${gameState.scores[1]}`;
+            
+            // Update progress bar
+            const progress = (gameState.currentLevel - 1) / gameState.maxLevel * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        }
+
+        // Update player turn display
+        function updatePlayerTurn() {
+            if (gameState.players === 2) {
+                document.getElementById('player-turn').textContent = 
+                    `Giliran Pemain ${gameState.currentPlayer}`;
+                document.getElementById('player-turn').style.display = 'block';
+            } else {
+                document.getElementById('player-turn').style.display = 'none';
+            }
+        }
+
+        // Generate math question based on difficulty
+        function generateQuestion() {
+            let num1, num2, operator, answer;
+            
+            switch(gameState.difficulty) {
+                case 'easy':
+                    operator = ['+', '-'][Math.floor(Math.random() * 2)];
+                    num1 = Math.floor(Math.random() * 20) + 1;
+                    num2 = Math.floor(Math.random() * 20) + 1;
+                    
+                    if (operator === '-') {
+                        // Ensure positive result
+                        if (num1 < num2) [num1, num2] = [num2, num1];
+                    }
+                    break;
+                    
+                case 'medium':
+                    operator = ['+', '-', '*'][Math.floor(Math.random() * 3)];
+                    num1 = Math.floor(Math.random() * 30) + 1;
+                    num2 = Math.floor(Math.random() * 20) + 1;
+                    break;
+                    
+                case 'hard':
+                    const ops = ['+', '-', '*', '/'];
+                    operator = ops[Math.floor(Math.random() * ops.length)];
+                    
+                    if (operator === '/') {
+                        num2 = Math.floor(Math.random() * 10) + 1;
+                        num1 = num2 * (Math.floor(Math.random() * 10) + 1);
+                    } else if (operator === '*') {
+                        num1 = Math.floor(Math.random() * 20) + 1;
+                        num2 = Math.floor(Math.random() * 15) + 1;
+                    } else {
+                        num1 = Math.floor(Math.random() * 50) + 1;
+                        num2 = Math.floor(Math.random() * 30) + 1;
+                        
+                        if (operator === '-' && num1 < num2) {
+                            [num1, num2] = [num2, num1];
+                        }
+                    }
+                    break;
+            }
+            
+            // Calculate answer
+            switch(operator) {
+                case '+': answer = num1 + num2; break;
+                case '-': answer = num1 - num2; break;
+                case '*': answer = num1 * num2; break;
+                case '/': answer = num1 / num2; break;
+            }
+            
+            gameState.currentQuestion = { num1, num2, operator, answer };
+            document.getElementById('question').textContent = `${num1} ${operator} ${num2} = ?`;
+            document.getElementById('feedback').textContent = '';
+            generateOptions(answer);
+        }
+
+        // Generate multiple choice options
+        function generateOptions(correctAnswer) {
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            // Create array of options including correct answer
+            const options = [correctAnswer];
+            
+            // Generate 3 incorrect options
+            while (options.length < 4) {
+                let wrongAnswer;
+                
+                // Generate wrong answers based on difficulty
+                switch(gameState.difficulty) {
+                    case 'easy':
+                        wrongAnswer = correctAnswer + Math.floor(Math.random() * 7) - 3;
+                        break;
+                    case 'medium':
+                        wrongAnswer = correctAnswer + Math.floor(Math.random() * 11) - 5;
+                        break;
+                    case 'hard':
+                        wrongAnswer = correctAnswer + Math.floor(Math.random() * 21) - 10;
+                        break;
+                }
+                
+                // Ensure wrong answer is different from correct and not already in options
+                if (wrongAnswer !== correctAnswer && !options.includes(wrongAnswer)) {
+                    options.push(wrongAnswer);
+                }
+            }
+            
+            // Shuffle options
+            shuffleArray(options);
+            
+            // Create buttons for each option
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, correctAnswer);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Fisher-Yates shuffle algorithm
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Start timer
+        function startTimer() {
+            clearInterval(gameState.timer);
+            gameState.timeLeft = 60;
+            document.getElementById('timer').textContent = gameState.timeLeft;
+            
+            gameState.timer = setInterval(() => {
+                gameState.timeLeft--;
+                document.getElementById('timer').textContent = gameState.timeLeft;
+                
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(gameState.timer);
+                    showFeedback(false, gameState.currentQuestion.answer);
+                    setTimeout(() => {
+                        nextLevel();
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        // Check answer
+        function checkAnswer(selectedAnswer, correctAnswer) {
+            // Disable all buttons
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (parseInt(btn.textContent) === correctAnswer) {
+                    btn.classList.add('correct');
+                } else if (parseInt(btn.textContent) === selectedAnswer && selectedAnswer !== correctAnswer) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            clearInterval(gameState.timer);
+            
+            if (selectedAnswer === correctAnswer) {
+                // Correct answer
+                const points = calculatePoints();
+                gameState.scores[gameState.currentPlayer - 1] += points;
+                showFeedback(true, correctAnswer, points);
+                
+                setTimeout(() => {
+                    nextLevel();
+                }, 1500);
+            } else {
+                // Incorrect answer
+                showFeedback(false, correctAnswer);
+                
+                setTimeout(() => {
+                    nextLevel();
+                }, 1500);
+            }
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, correctAnswer, points = 0) {
+            const feedback = document.getElementById('feedback');
+            if (isCorrect) {
+                feedback.textContent = `Benar! +${points} poin`;
+                feedback.className = 'feedback correct-feedback';
+            } else {
+                feedback.textContent = `Salah! Jawaban yang benar: ${correctAnswer}`;
+                feedback.className = 'feedback incorrect-feedback';
+            }
+        }
+
+        // Calculate points based on difficulty and time
+        function calculatePoints() {
+            let basePoints = 0;
+            
+            switch(gameState.difficulty) {
+                case 'easy': basePoints = 10; break;
+                case 'medium': basePoints = 20; break;
+                case 'hard': basePoints = 50; break;
+            }
+            
+            // Bonus points for faster answers
+            const timeBonus = Math.floor(gameState.timeLeft / 10);
+            return basePoints + timeBonus;
+        }
+
+        // Move to next level
+        function nextLevel() {
+            gameState.currentLevel++;
+            
+            if (gameState.currentLevel > gameState.maxLevel) {
+                endGame();
+            } else {
+                // Switch player in 2-player mode
+                if (gameState.players === 2) {
+                    gameState.currentPlayer = gameState.currentPlayer === 1 ? 2 : 1;
+                }
+                
+                updateLevelDisplay();
+                updatePlayerTurn();
+                generateQuestion();
+                startTimer();
+            }
+        }
+
+        // End game
+        function endGame() {
+            clearInterval(gameState.timer);
+            
+            // Determine winner for 2 players
+            let winnerText = "";
+            if (gameState.players === 2) {
+                if (gameState.scores[0] > gameState.scores[1]) {
+                    winnerText = "Pemain 1 menang!";
+                } else if (gameState.scores[1] > gameState.scores[0]) {
+                    winnerText = "Pemain 2 menang!";
+                } else {
+                    winnerText = "Seri!";
+                }
+            }
+            
+            // Get highest score
+            const highestScore = Math.max(...gameState.scores);
+            
+            // Add to rankings (mock)
+            const playerName = prompt(`Masukkan nama Anda:${winnerText ? '\n' + winnerText : ''}`, "Pemain");
+            if (playerName) {
+                gameState.rankings.push({
+                    name: playerName,
+                    score: highestScore,
+                    level: gameState.difficulty
+                });
+                
+                // Sort rankings
+                gameState.rankings.sort((a, b) => b.score - a.score);
+                
+                // Keep only top 10
+                if (gameState.rankings.length > 10) {
+                    gameState.rankings.pop();
+                }
+            }
+            
+            showScreen('ranking-screen');
+            displayRankings();
+        }
+
+        // Display rankings
+        function displayRankings() {
+            const tbody = document.getElementById('ranking-body');
+            tbody.innerHTML = '';
+            
+            gameState.rankings.forEach((player, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${player.name}</td>
+                    <td>${player.score}</td>
+                    <td>${player.level}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize
+        function init() {
+            displayRankings();
+        }
+
+        // Start the game
+        init();
+    </script>
+</body>
+</html>
