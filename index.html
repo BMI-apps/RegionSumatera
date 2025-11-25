@@ -17,12 +17,11 @@
         position: fixed; 
         bottom: 0; 
         left: 0;
-        /* CATATAN: 'align: center;' DIHAPUS karena tidak valid */
-        width: 100%;
+        width: 100%; /* Membentang penuh, ini sudah benar */
         
         /* Styling Visual */
-        background-color: #2c3e50; /* Warna gelap untuk latar belakang */
-        color: #bdc3c7; /* Warna teks */
+        background-color: #2c3e50; 
+        color: #bdc3c7; 
         padding: 5px 5px;
         box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
         z-index: 1000;
@@ -32,11 +31,13 @@
     
     .footer-content {
         display: flex;
-        **justify-content: center;** /* DIUBAH untuk menengahkan konten teks */
-        align-items: center;
+        **justify-content: center;** /* Menengahkan item Flex (teks) secara horizontal */
+        align-items: center; /* Menengahkan item Flex secara vertikal */
         max-width: 1200px;
-        margin: 0 auto; /* Tetap menengahkan .footer-content di dalam #app-footer */
+        margin: 0 auto; /* Menengahkan .footer-content di dalam #app-footer */
         height: 100%;
+        
+        **text-align: center;** /* Menjamin penengahan teks/konten inline */
     }
     
     .footer-content a {
