@@ -17,25 +17,25 @@
         position: fixed; 
         bottom: 0; 
         left: 0;
-        align: center;
+        /* CATATAN: 'align: center;' DIHAPUS karena tidak valid */
         width: 100%;
         
         /* Styling Visual */
         background-color: #2c3e50; /* Warna gelap untuk latar belakang */
         color: #bdc3c7; /* Warna teks */
         padding: 5px 5px;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Bayangan di atas footer */
-        z-index: 1000; /* Memastikan footer berada di atas konten lain */
-        height: 50px; /* Tentukan tinggi footer */
-        box-sizing: border-box; /* Memastikan padding dan border dihitung dalam height */
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        height: 50px;
+        box-sizing: border-box;
     }
     
     .footer-content {
         display: flex;
-        justify-content: space-between; /* Menyebar konten */
+        **justify-content: center;** /* DIUBAH untuk menengahkan konten teks */
         align-items: center;
-        max-width: 1200px; /* Batasi lebar konten */
-        margin: 0 auto; /* Tengahkankan konten */
+        max-width: 1200px;
+        margin: 0 auto; /* Tetap menengahkan .footer-content di dalam #app-footer */
         height: 100%;
     }
     
@@ -51,12 +51,9 @@
     }
     
     /* PENYESUAIAN PENTING UNTUK KONTEN UTAMA */
-    /* Berikan padding-bottom pada body/main setidaknya setinggi footer
-       agar konten tidak tertutup oleh footer saat digulir ke bawah. */
     main {
         padding-bottom: 70px; /* Pastikan ini lebih besar dari tinggi footer (50px) */
-/*        text-align: center; */
-    }      
+    }        
     </style>
     <style>
         /* Gaya Dasar & Responsif */
@@ -76,7 +73,6 @@
             padding: 40px 20px;
         }
         h1, h2 {
-/*            text-align: center;*/
             color: #2c3e50;
         }
         /* Gaya CTA */
@@ -115,7 +111,7 @@
     </style>
 </head>
 <body>
-    <div class="container">            
+    <div class="container">                
         <p style="text-align: center; font-size: 30px; color: #2c3e50;">
             Monitoring Produktifitas Tim Bisnis Anda Kapan Saja Dan Di Mana Saja
         </p>
@@ -123,11 +119,12 @@
             <a href="https://ahmad-denny.github.io/m-direct/" class="cta-button cta-primary"><img src=".\img\logo_mdirect.png" width="80"></a>
             <a href="https://ahmad-denny.github.io/m-activity/" class="cta-button cta-secondary"><img src=".\img\logo_mactivity.png" width="80"></a>
         </div>
-        <footer id="app-footer">
-            <div class="footer-content">
-                &copy;2025 - RBPM Region Sumatera.
-            </div>
-        </footer>
-    </div>
+        </div>
+
+    <footer id="app-footer">
+        <div class="footer-content">
+            &copy;2025 - RBPM Region Sumatera.
+        </div>
+    </footer>
 </body>
 </html>
